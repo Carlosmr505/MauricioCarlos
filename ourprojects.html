@@ -5,11 +5,88 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Our Projects</title>
+    <title>Rock, paper, scissors game</title>
 </head>
 
 <body>
+    <script>
 
+        function playerSelection() {
+
+            let playerChoice = prompt('Choose between rock, paper or scissors');
+
+            if (playerChoice === null) {
+                alert('You\'ve chosen not to play.');
+                return playerChoice;
+
+            } else if (playerChoice.trim().toLowerCase() === 'rock' || playerChoice.trim().toLowerCase() === 'paper' || playerChoice.trim().toLowerCase() === 'scissors') {
+                return playerChoice.trim().toLowerCase();
+
+            } else {
+                alert('Please write a valid choose');
+                return playerSelection();
+            }
+
+        }
+
+        function computerSelection() {
+
+            const computerOptions = ['rock', 'paper', 'scissors'];
+            let computerChoice = computerOptions[randomGenerator()];
+            return computerChoice;
+
+        }
+
+        function randomGenerator() {
+
+            let randomNumber = Math.floor(Math.random() * 3);
+            return randomNumber;
+
+        }
+
+        function playRound() {
+
+            const gameIndex = ['rock', 'paper', 'scissors'];
+            const gameArray = [
+                [0, -1, 1],
+                [1, 0, -1],
+                [-1, 1, 0]
+            ];
+
+            let gameRound = [playerSelection(), computerSelection()],
+                playerColumn = gameIndex.indexOf(gameRound[0]),
+                computerRow = gameIndex.indexOf(gameRound[1]);
+
+            switch (gameArray[playerColumn][computerRow]) {
+                case -1:
+                    gameResult = 'you\'ve lost!'
+                    break;
+                case 0:
+                    gameResult = 'the game is tied!'
+                    break;
+                case 1:
+                    gameResult = 'you\'ve won!'
+                    break;
+
+            }
+
+            return `You\'ve chosen ${gameRound[0]} and the computer have chosen ${gameRound[1]}, therefore ${gameResult}`
+
+        }
+
+        function playGame() {
+
+            alert(playRound());
+            let newGame = confirm('¿Do you wish to play again?') ?
+                () => playGame() :
+                () => alert('You\'ve chosen not to play.');
+
+            return newGame();
+        }
+
+        playGame();
+
+    </script>
 </body>
 
 </html>
